@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-text-field label="Label"></v-text-field>
+    <v-text-field label="Label" append-inner-icon="alert-triangle-outline"></v-text-field>
+    <v-icon>github-outline</v-icon>
+    <v-icon>github-outline</v-icon>
   </div>
 </template>
 
