@@ -1,5 +1,5 @@
 <template>
-  <i :data-eva="icon" :key="key"></i>
+  <i :data-eva="icon" :data-eva-fill="fill"></i>
 </template>
 
 <script setup>
@@ -11,6 +11,10 @@ const props = defineProps({
     required: true
   },
   icon: {
+    type: String,
+    required: false
+  },
+  fill: {
     type: String,
     required: false
   },
