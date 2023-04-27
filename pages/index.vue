@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Bonjour {{ user }}</h1>
     <!-- <v-text-field label="Label" append-inner-icon="alert-triangle-outline"></v-text-field>
       <v-btn
         class="ma-2"
@@ -21,5 +22,9 @@
 </template>
 
 <script setup>
+import { useUserStore } from '~/stores/user'
+
 const test = ref('bonjour')
+const {user} = useUserStore()
+
 </script>
