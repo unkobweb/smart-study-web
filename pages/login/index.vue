@@ -1,10 +1,15 @@
 <template>
   <div class="w-100 h-screen d-flex flex-column align-center justify-center">
-    <h1>Add input for credentials login</h1>
+    <div class="w-25 d-flex flex-column justify-center">
+      <v-text-field prepend-inner-icon="at-outline" label="Email" v-model="email"></v-text-field>
+      <v-text-field prepend-inner-icon="lock-outline" label="Password" v-model="password"></v-text-field>
+      <v-btn @click="signIn">Connexion</v-btn>
+    </div>
     <v-btn-group class="d-flex flex-row">
       <v-btn prepend-icon="google" variant="tonal" @click="logViaGoogle" class="mr-2">Google</v-btn>
       <v-btn prepend-icon="linkedin" variant="tonal" @click="logViaLinkedin">Linkedin</v-btn>
     </v-btn-group>
+    
   </div>
 </template>
 
@@ -17,7 +22,17 @@
  *  Cette fonction doit être appelée au click sur un bouton (du coup faut créer ce nouveau bouton)
  *  C'est déjà très bien d'être aller jusque là, on verra la suite ensemble
  */
+const email = ref("")
+const password = ref("")
 
+function signIn() {
+  if(email.value == "" ) {
+    alert('Veillez renseigner une adresse email dans la zone')
+  }
+  if(password.value == "") {
+    alert('Veillez renseigner une adresse email dans la zone')
+  }
+}
 
 function logViaGoogle() {
   window.location.href = "http://localhost:8080/auth/google"
