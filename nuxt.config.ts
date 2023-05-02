@@ -11,8 +11,12 @@ export default defineNuxtConfig({
       'process.env.DEBUG': false,
     },
   },
+  imports: {
+    dirs: [
+      './stores'
+    ]
+  },
   modules: [
-    // ...
     '@pinia/nuxt',
   ],
   pinia: {

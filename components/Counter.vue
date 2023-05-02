@@ -13,7 +13,6 @@
 </template>
 
 <script setup>
-import { useCounterStore } from '~/stores/counter'
 const props = defineProps(['startAt'])
 
 const { counter, increment, decrement } = useCounter(props.startAt)
