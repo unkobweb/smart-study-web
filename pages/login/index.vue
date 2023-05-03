@@ -28,13 +28,20 @@
 const email = ref("")
 const password = ref("")
 
-function signIn() {
+async function signIn() {
   if(email.value == "" ) {
     alert('Veillez renseigner une adresse email dans la zone')
   }
   if(password.value == "") {
     alert('Veillez renseigner une adresse email dans la zone')
   }
+  await useApiFetch('/auth/login', {
+    method: 'POST',
+    body: {
+      email: email.value,
+      password: password.value
+    }
+  })
 }
 
 function logViaGoogle() {

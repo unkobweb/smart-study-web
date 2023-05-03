@@ -5,6 +5,16 @@ describe('Login page', () => {
     cy.get('#email-input').type('test@test')
     cy.get('#password-input').type('test')
 
-    cy.contains('SE CONNECTER').click()
+    cy.intercept(
+      {
+        method: 'POST', // Route all GET requests
+        url: '/auth/login', // that have a URL that matches '/users/*'
+      },
+      {
+        statusCode: 401
+      } // and force the response to be: []
+    )
+
+    cy.contains('se connecter', {matchCase: false}).click()
   })
 })
