@@ -4,7 +4,15 @@
       <h1>Connexion</h1>
       <div class="w-100 d-flex flex-column justify-center mb-4">
         <v-text-field id="email-input" variant="outlined" prepend-inner-icon="at-outline" label="Email" v-model="email"></v-text-field>
-        <v-text-field id="password-input" variant="outlined" prepend-inner-icon="lock-outline" label="Password" v-model="password"></v-text-field>
+        <v-text-field 
+          append-inner-icon="lock-outline" 
+          @click:append-inner="() => {console.log('test')}" 
+          id="password-input" 
+          variant="outlined" 
+          prepend-inner-icon="lock-outline" 
+          label="Password" 
+          v-model="password"
+        ></v-text-field>
         <v-btn variant="tonal" @click="signIn">SE CONNECTER</v-btn>
       </div>
       <v-btn-group class="d-flex flex-row">
@@ -21,6 +29,10 @@ const {$event} = useNuxtApp()
 
 const email = ref("")
 const password = ref("")
+
+function showFunc() {
+  console.log('show')
+}
 
 async function signIn() {
   $event.$emit('show-snackbar', {
