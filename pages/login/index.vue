@@ -6,7 +6,7 @@
         <v-text-field id="email-input" variant="outlined" prepend-inner-icon="at-outline" label="Email" v-model="email"></v-text-field>
         <v-text-field 
           append-inner-icon="lock-outline" 
-          @click:append-inner="() => {console.log('test')}" 
+          @click:append-inner="showFunc" 
           id="password-input" 
           variant="outlined" 
           prepend-inner-icon="lock-outline" 
