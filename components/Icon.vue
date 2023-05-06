@@ -1,5 +1,6 @@
 <template>
-  <i :data-eva="icon" :data-eva-fill="fill"></i>
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" v-html="svg">
+  </svg>
 </template>
 
 <script setup>
@@ -24,7 +25,5 @@ const props = defineProps({
   },
 })
 
-onMounted(() => {
-  eva.replace()
-})
+const svg = ref(eva.icons[props.icon].contents)
 </script>

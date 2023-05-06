@@ -6,23 +6,23 @@
         <v-text-field
           id="email-input"
           variant="outlined"
-          prepend-inner-icon="at-outline"          
+          prepend-inner-icon="at-outline"
           :rules="[emailRules.required]"
           validate-on="blur"
           label="Email"
           v-model="email"
         ></v-text-field>
+
         <v-text-field
+          append-inner-icon="lock-outline"
+          @click:append-inner="showFunc"
           id="password-input"
           variant="outlined"
           prepend-inner-icon="lock-outline"
-          :append-inner-icon="showPassword ? 'eye-off-outline' : 'eye-outline'"
-          :type="showPassword ? 'text' : 'password'"
-          :rules="[passwordRules.required]"
-          validate-on="blur"
           label="Password"
           v-model="password"
-          @click:append="showPassword = !showPassword"
+          :rules="[passwordRules.required]"
+          validate-on="blur"
         ></v-text-field>
         <v-btn variant="tonal" @click="signIn">SE CONNECTER</v-btn>
       </div>
@@ -58,11 +58,15 @@ const password = ref("");
 const showPassword = ref(false);
 
 const emailRules = ref({
-  required: value => !!value || "L'email est requis"
+  required: (value) => !!value || "L'email est requis",
 });
 const passwordRules = ref({
-  required: (value) => !!value || "Le mot de passe est requis"
+  required: (value) => !!value || "Le mot de passe est requis",
 });
+
+function showFunc() {
+  console.log("show");
+}
 
 async function signIn() {
   $event.$emit("show-snackbar", {
