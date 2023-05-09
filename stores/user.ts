@@ -1,9 +1,10 @@
 export const useUserStore = defineStore('user', () => {
   const user = ref(null)
 
-  function setUser(newUser: any) {
-    user.value = newUser
+  async function fetchUser() {
+    const {data} = await useApiFetch('/profile')
+    user.value = data.value
   }
 
-  return { user, setUser }
+  return { user, fetchUser }
 })

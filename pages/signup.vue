@@ -72,7 +72,29 @@ const samePassword = ref({
 })
 
 async function signUp() {
-  console.log('Sign Up')
+  $event.$emit("show-snackbar", {
+    message: "Inscription en cours...",
+    loading: true,
+  });
+
+  const {data, pending, error} = await useApiFetch('/auth/register', {
+    method: 'POST',
+    body: {
+      email: email.value,
+      password: password.value,
+      confirmPassword: confirmedPassword.value,
+    },
+  })
+
+  $event.$emit("show-snackbar", {
+    message: "Inscription réussie !",
+    type: "success",
+  });
+
+  const token = useCookie('access_token')
+  token.value = data.value.access_token
+  
+  useRouter().push('/')
 }
 </script>
 

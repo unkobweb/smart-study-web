@@ -73,15 +73,18 @@ async function signIn() {
     message: "Connexion en cours...",
     loading: true,
   });
-  return;
 
-  await useApiFetch("/auth/login", {
+  const {data} = await useApiFetch("/auth/login", {
     method: "POST",
     body: {
       email: email.value,
       password: password.value,
     },
   });
+
+  useCookie('access_token', data.value.access_token)
+
+  useRouter().push('/')
 }
 
 function logViaGoogle() {
