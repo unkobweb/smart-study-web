@@ -18,8 +18,9 @@ export default async function (url: string, options: any = {}) {
 
   const {data, error, refresh, pending} = await useFetch(url, options)
   
+  console.log(error.value?.statusCode)
   if (error.value && error.value.statusCode === 401) {
-    accessToken.value = null
+    // accessToken.value = null
     router.push('/login')
   }
   
