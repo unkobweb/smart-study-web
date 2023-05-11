@@ -11,7 +11,7 @@
   },
   "devDependencies": {
     "cypress": "^12.11.0",
-    "nuxt": "^3.3.3"
+    "nuxt": "^3.4.3"
   },
   "dependencies": {
     "@mdi/font": "^7.2.96",
