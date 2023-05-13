@@ -3,28 +3,33 @@
     <div class="login-container d-flex flex-column align-center justify-center">
       <h1>Connexion</h1>
       <div class="w-100 d-flex flex-column justify-center mb-4">
-        <v-text-field
-          id="email-input"
-          variant="outlined"
-          prepend-inner-icon="at-outline"
-          :rules="[emailRules.required]"
-          validate-on="blur"
-          label="Email"
-          v-model="email"
-        ></v-text-field>
+        <v-form v-model="valid">
+          <v-text-field
+            id="email-input"
+            variant="outlined"
+            prepend-inner-icon="at-outline"
+            :rules="[emailRules.required]"
+            validate-on="blur"
+            label="Email"
+            v-model="email"
+          ></v-text-field>
 
-        <v-text-field
-          append-inner-icon="lock-outline"
-          @click:append-inner="showFunc"
-          id="password-input"
-          variant="outlined"
-          prepend-inner-icon="lock-outline"
-          label="Password"
-          v-model="password"
-          :rules="[passwordRules.required]"
-          validate-on="blur"
-        ></v-text-field>
-        <v-btn variant="tonal" @click="signIn">SE CONNECTER</v-btn>
+          <v-text-field
+            :append-inner-icon="
+              showPassword ? 'eye-outline' : 'eye-off-outline'
+            "
+            :type="showPassword ? 'text' : 'password'"
+            @click:appendInner="showPassword = !showPassword"
+            id="password-input"
+            variant="outlined"
+            prepend-inner-icon="lock-outline"
+            label="Password"
+            v-model="password"
+            :rules="[passwordRules.required]"
+            validate-on="blur"
+          ></v-text-field>
+          <v-btn variant="tonal" @click="signIn">SE CONNECTER</v-btn>
+        </v-form>
       </div>
       <v-btn-group class="d-flex flex-row">
         <v-btn
@@ -56,7 +61,7 @@ const { $event } = useNuxtApp();
 const email = ref("");
 const password = ref("");
 const showPassword = ref(false);
-
+const valid = ref(false);
 const emailRules = ref({
   required: (value) => !!value || "L'email est requis",
 });
@@ -74,7 +79,7 @@ async function signIn() {
     loading: true,
   });
 
-  const {data} = await useApiFetch("/auth/login", {
+  const { data, error } = await useApiFetch("/auth/login", {
     method: "POST",
     body: {
       email: email.value,
@@ -82,9 +87,25 @@ async function signIn() {
     },
   });
 
-  useCookie('access_token', data.value.access_token)
+  if (
+    error.value &&
+    (error.value.statusCode === 401 || error.value.statusCode === 400)
+  ) {
+    $event.$emit("show-snackbar", {
+      message: "Identifiants incorrects",
+      type: "error",
+    });
 
-  useRouter().push('/')
+    return;
+  }
+
+  $event.$emit("show-snackbar", {
+    message: "Connexion réussie !",
+    type: "success",
+  });
+
+  useCookie("access_token").value = data.value.access_token;
+  useRouter().push("/");
 }
 
 function logViaGoogle() {

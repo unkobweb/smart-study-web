@@ -5,41 +5,47 @@
     >
       <h1>Inscription</h1>
       <div class="w-100 d-flex flex-column justify-center mb-4">
-        <v-text-field
-          id="email-input"
-          variant="outlined"
-          prepend-inner-icon="at-outline"
-          label="Email"
-          v-model="email"
-          :rules="[emailRules.required, emailRules.reel]"
-          validate-on="blur"
-        ></v-text-field>
+        <v-form v-model="valid">
+          <v-text-field
+            id="email-input"
+            variant="outlined"
+            prepend-inner-icon="at-outline"
+            label="Email"
+            v-model="email"
+            :rules="[emailRules.required, emailRules.reel]"
+            validate-on="blur"
+          ></v-text-field>
 
-        <v-text-field
-          id="password-input"
-          variant="outlined"
-          prepend-inner-icon="lock-outline"
-          :append-inner-icon="showPassword ? 'eye-off-outline' : 'eye-outline'"
-          :type="showPassword ? 'text' : 'password'"
-          :rules="[passwordRules.required, passwordRules.length]"
-          validate-on="blur"
-          label="Password"
-          v-model="password"
-          @click:append="showPassword = !showPassword"
-        ></v-text-field>
-        <v-text-field
-          id="password-input"
-          variant="outlined"
-          prepend-inner-icon="lock-outline"
-          :append-inner-icon="showPassword ? 'eye-off-outline' : 'eye-outline'"
-          :type="showPassword ? 'text' : 'password'"
-          :rules="[samePassword.rule]"
-          validate-on-blur
-          label="Confirm Password"
-          v-model="confirmedPassword"
-          @click:append="showPassword = !showPassword"
-        ></v-text-field>
-        <v-btn variant="tonal" @click="signUp">S'INSCRIRE</v-btn>
+          <v-text-field
+            id="password-input"
+            variant="outlined"
+            prepend-inner-icon="lock-outline"
+            :append-inner-icon="
+              showPassword ? 'eye-off-outline' : 'eye-outline'
+            "
+            :type="showPassword ? 'text' : 'password'"
+            :rules="[passwordRules.required, passwordRules.length]"
+            validate-on="blur"
+            label="Password"
+            v-model="password"
+            @click:appendInner="showPassword = !showPassword"
+          ></v-text-field>
+          <v-text-field
+            id="password-input"
+            variant="outlined"
+            prepend-inner-icon="lock-outline"
+            :append-inner-icon="
+              showConfirmPassword ? 'eye-off-outline' : 'eye-outline'
+            "
+            :type="showConfirmPassword ? 'text' : 'password'"
+            :rules="[samePassword.rule]"
+            validate-on="blur"
+            label="Confirm Password"
+            v-model="confirmedPassword"
+            @click:appendInner="showConfirmPassword = !showConfirmPassword"
+          ></v-text-field>
+          <v-btn variant="tonal" @click="signUp">S'INSCRIRE</v-btn>
+        </v-form>
       </div>
       <p class="mt-4">
         Déjà un compte ? <NuxtLink to="/login">Se connecter</NuxtLink>
@@ -55,9 +61,11 @@ const email = ref("");
 const password = ref("");
 const confirmedPassword = ref("");
 const showPassword = ref(false);
+const showConfirmPassword = ref(false);
+const valid = ref(false);
 const emailRules = ref({
-  required: value => !!value || "L'email est requis",
-  reel: value =>
+  required: (value) => !!value || "L'email est requis",
+  reel: (value) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "L'email n'est pas valide",
 });
 const passwordRules = ref({
@@ -68,8 +76,10 @@ const passwordRules = ref({
 });
 
 const samePassword = ref({
-    rule: value => password.value === value || 'Les deux mots de passe doivent être identiques'
-})
+  rule: (value) =>
+    password.value === value ||
+    "Les deux mots de passe doivent être identiques",
+});
 
 async function signUp() {
   $event.$emit("show-snackbar", {
@@ -77,24 +87,24 @@ async function signUp() {
     loading: true,
   });
 
-  const {data, pending, error} = await useApiFetch('/auth/register', {
-    method: 'POST',
+  const { data, pending, error } = await useApiFetch("/auth/register", {
+    method: "POST",
     body: {
       email: email.value,
       password: password.value,
       confirmPassword: confirmedPassword.value,
     },
-  })
+  });
 
   $event.$emit("show-snackbar", {
     message: "Inscription réussie !",
     type: "success",
   });
 
-  const token = useCookie('access_token')
-  token.value = data.value.access_token
-  
-  useRouter().push('/')
+  const token = useCookie("access_token");
+  token.value = data.value.access_token;
+
+  useRouter().push("/");
 }
 </script>
 
