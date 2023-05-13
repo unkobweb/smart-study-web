@@ -74,6 +74,9 @@ function showFunc() {
 }
 
 async function signIn() {
+  if(valid.value == false) {
+    return
+  }
   $event.$emit("show-snackbar", {
     message: "Connexion en cours...",
     loading: true,

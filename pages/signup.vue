@@ -82,6 +82,9 @@ const samePassword = ref({
 });
 
 async function signUp() {
+  if(valid.value == false) {
+    return
+  }
   $event.$emit("show-snackbar", {
     message: "Inscription en cours...",
     loading: true,
