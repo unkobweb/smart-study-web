@@ -7,7 +7,9 @@
 <script setup>
 import { useUserStore } from '~/stores/user'
 
-const {user, fetchUser} = useUserStore()
+const user = ref('bonjour')
 
-await fetchUser()
+// const {user, fetchUser} = useUserStore()
+
+// await fetchUser()
 </script>

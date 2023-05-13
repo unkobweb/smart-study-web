@@ -3,22 +3,27 @@ export default defineNuxtConfig({
   css: [
     'vuetify/lib/styles/main.sass',
   ],
+
   build: {
     transpile: ['vuetify'],
   },
+
   vite: {
     define: {
       'process.env.DEBUG': false,
     },
   },
+
   imports: {
     dirs: [
       './stores'
     ]
   },
+
   modules: [
     '@pinia/nuxt',
   ],
+
   pinia: {
     autoImports: [
       // automatically imports `defineStore`
@@ -26,4 +31,8 @@ export default defineNuxtConfig({
       ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
     ],
   },
+
+  devtools: {
+    enabled: true
+  }
 })
