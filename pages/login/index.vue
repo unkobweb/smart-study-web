@@ -10,14 +10,14 @@
             prepend-inner-icon="at-outline"
             :rules="[emailRules.required]"
             validate-on="blur"
+            hide-details="auto"
             label="Email"
             v-model="email"
+            class="mb-4"
           ></v-text-field>
 
           <v-text-field
-            :append-inner-icon="
-              showPassword ? 'eye-outline' : 'eye-off-outline'
-            "
+            :append-inner-icon="showPassword ? 'eye-off-outline' : 'eye-outline'"
             :type="showPassword ? 'text' : 'password'"
             @click:appendInner="showPassword = !showPassword"
             id="password-input"
@@ -26,9 +26,11 @@
             label="Password"
             v-model="password"
             :rules="[passwordRules.required]"
+            hide-details="auto"
             validate-on="blur"
+            class="mb-4"
           ></v-text-field>
-          <v-btn variant="tonal" @click="signIn">SE CONNECTER</v-btn>
+          <v-btn class="w-100" variant="tonal" @click="signIn">SE CONNECTER</v-btn>
         </v-form>
       </div>
       <v-btn-group class="d-flex flex-row">

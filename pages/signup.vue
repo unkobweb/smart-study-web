@@ -13,16 +13,18 @@
             label="Email"
             v-model="email"
             :rules="[emailRules.required, emailRules.reel]"
+            hide-details="auto"
+            class="mb-4"
             validate-on="blur"
           ></v-text-field>
 
           <v-text-field
             id="password-input"
             variant="outlined"
+            hide-details="auto"
+            class="mb-4"
             prepend-inner-icon="lock-outline"
-            :append-inner-icon="
-              showPassword ? 'eye-off-outline' : 'eye-outline'
-            "
+            :append-inner-icon="showPassword ? 'eye-off-outline' : 'eye-outline'"
             :type="showPassword ? 'text' : 'password'"
             :rules="[passwordRules.required, passwordRules.length]"
             validate-on="blur"
@@ -31,12 +33,12 @@
             @click:appendInner="showPassword = !showPassword"
           ></v-text-field>
           <v-text-field
-            id="password-input"
+            id="confirm-password-input"
             variant="outlined"
+            hide-details="auto"
+            class="mb-4"
             prepend-inner-icon="lock-outline"
-            :append-inner-icon="
-              showConfirmPassword ? 'eye-off-outline' : 'eye-outline'
-            "
+            :append-inner-icon="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"
             :type="showConfirmPassword ? 'text' : 'password'"
             :rules="[samePassword.rule]"
             validate-on="blur"
@@ -44,7 +46,7 @@
             v-model="confirmedPassword"
             @click:appendInner="showConfirmPassword = !showConfirmPassword"
           ></v-text-field>
-          <v-btn variant="tonal" @click="signUp">S'INSCRIRE</v-btn>
+          <v-btn class="w-100" variant="tonal" @click="signUp">S'INSCRIRE</v-btn>
         </v-form>
       </div>
       <p class="mt-4">

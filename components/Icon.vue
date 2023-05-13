@@ -26,4 +26,8 @@ const props = defineProps({
 })
 
 const svg = ref(eva.icons[props.icon].contents)
+
+watch(() => props.icon, () => {
+  svg.value = eva.icons[props.icon].contents
+})
 </script>
