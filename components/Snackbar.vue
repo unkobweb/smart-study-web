@@ -11,7 +11,7 @@
         <v-progress-circular :size="24" class="mr-4" indeterminate></v-progress-circular>
       </div>
       <div v-else>
-        <v-icon class="mr-4" :fill="snackbar.iconColor" :icon="snackbar.icon"></v-icon>
+        <v-icon class="mr-4" :fill="snackbar.color" :icon="snackbar.icon"></v-icon>
       </div>
       {{ snackbar.message }}
     </div>
