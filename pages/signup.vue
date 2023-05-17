@@ -59,6 +59,12 @@
 <script setup>
 const { $event } = useNuxtApp();
 
+const userStore = useUserStore();
+
+definePageMeta({
+  layout: "empty",
+})
+
 const email = ref("");
 const password = ref("");
 const confirmedPassword = ref("");
@@ -106,8 +112,8 @@ async function signUp() {
     type: "success",
   });
 
-  const token = useCookie("access_token");
-  token.value = data.value.access_token;
+  userStore.setAccessToken(data.value.token);
+  await userStore.fetchUser();
 
   useRouter().push("/");
 }

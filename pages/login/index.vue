@@ -60,6 +60,12 @@
 <script setup>
 const { $event } = useNuxtApp();
 
+const userStore = useUserStore();
+
+definePageMeta({
+  layout: "empty",
+})
+
 const email = ref("");
 const password = ref("");
 const showPassword = ref(false);
@@ -70,10 +76,6 @@ const emailRules = ref({
 const passwordRules = ref({
   required: (value) => !!value || "Le mot de passe est requis",
 });
-
-function showFunc() {
-  console.log("show");
-}
 
 async function signIn() {
   if(valid.value == false) {
@@ -109,8 +111,15 @@ async function signIn() {
     type: "success",
   });
 
-  useCookie("access_token").value = data.value.access_token;
-  useRouter().push("/");
+  if (data.value.token && data.value.type === "2fa") {
+    userStore.setMfaToken(data.value.token);
+    useRouter().push({ path: "/2fa/verify" });
+    return;
+  } 
+
+  userStore.setAccessToken(data.value.token); 
+  await userStore.fetchUser();
+  useRouter().push({ path: "/" });
 }
 
 function logViaGoogle() {

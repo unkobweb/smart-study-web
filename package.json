@@ -11,6 +11,7 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.4.6",
+    "@pinia-plugin-persistedstate/nuxt": "^1.1.1",
     "cypress": "^12.11.0",
     "nuxt": "^3.4.3"
   },
@@ -21,7 +22,8 @@
     "jwt-decode": "^3.1.2",
     "mitt": "^3.0.0",
     "pinia": "^2.0.34",
+    "qrcode": "^1.5.3",
     "sass": "^1.61.0",
-    "vuetify": "^3.2.4"
+    "vuetify": "^3.2.5"
   }
 }

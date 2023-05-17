@@ -1,7 +1,9 @@
+import { storeToRefs } from "pinia"
+
 export default async function (url: string, options: any = {}) {
   options.baseURL = 'http://localhost:8080'
 
-  const accessToken = useCookie('access_token')
+  const { accessToken } = storeToRefs(useUserStore())
 
   if (accessToken.value) {
     options = {
@@ -18,10 +20,12 @@ export default async function (url: string, options: any = {}) {
 
   const {data, error, refresh, pending} = await useFetch(url, options)
   
-  console.log(error.value?.statusCode)
-  if (error.value && error.value.statusCode === 401) {
-    // accessToken.value = null
-    router.push('/login')
+  if (error.value) {
+    if (error.value.statusCode === 401) {
+      router.push('/login')
+    } else {
+      createError(error.value)
+    }
   }
   
   return {data, error, refresh, pending}
