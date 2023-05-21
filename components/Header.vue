@@ -4,7 +4,7 @@
       <v-app-bar-title>Smart Study</v-app-bar-title>
       <div class="d-flex flex-row align-center" v-if="user">
         <NuxtLink to="/profile"><p class="mr-3">{{ user.email }}</p></NuxtLink>
-        <v-btn variant="tonal" @click="logout">Se déconnecter</v-btn>
+        <v-btn class="mr-3" variant="tonal" @click="logout">Se déconnecter</v-btn>
       </div>
       <div v-else>
         <NuxtLink class="mr-3" to="/login">

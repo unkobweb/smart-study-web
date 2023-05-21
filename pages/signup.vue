@@ -52,7 +52,7 @@
             v-model="confirmedPassword"
             @click:appendInner="showConfirmPassword = !showConfirmPassword"
           ></v-text-field>
-          <v-btn class="w-100 btnPrimary" @click="signUp">S'INSCRIRE</v-btn>
+          <v-btn class="w-100 btnPrimary" @click="signUp">S'inscrire</v-btn>
         </v-form>
       </div>
       <p class="mt-4">

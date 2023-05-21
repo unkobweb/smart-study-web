@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <h1>Bonjour</h1>
-    <NuxtLink to="/login">Se connecter</NuxtLink>
+  <div class="pa-5">
+    <h1>Les cours du moment</h1>
   </div>
 </template>
 

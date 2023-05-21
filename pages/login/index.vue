@@ -62,6 +62,9 @@
         Pas encore de compte ? <NuxtLink to="/signup">S'inscrire</NuxtLink>
       </p>
     </div>
+    <v-dialog persistent v-model="showMfaVerify" max-width="500">
+      <MfaVerify @close="showMfaVerify = false" />
+    </v-dialog>
   </div>
 </template>
 
@@ -73,6 +76,8 @@ const userStore = useUserStore();
 definePageMeta({
   layout: "empty",
 })
+
+const showMfaVerify = ref(false);
 
 const email = ref("");
 const password = ref("");
@@ -121,7 +126,7 @@ async function signIn() {
 
   if (data.value.token && data.value.type === "2fa") {
     userStore.setMfaToken(data.value.token);
-    useRouter().push({ path: "/2fa/verify" });
+    showMfaVerify.value = true;
     return;
   } 
 
