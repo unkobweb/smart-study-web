@@ -46,7 +46,7 @@
             id="password-input"
             variant="outlined"
             prepend-inner-icon="lock-outline"
-            label="Password"
+            label="Mot de passe"
             v-model="password"
             :rules="[passwordRules.required]"
             hide-details="auto"

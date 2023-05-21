@@ -1,9 +1,9 @@
 <template>
-  <div class="w-100 h-screen d-flex flex-column align-center justify-center">
+  <div class="signup-page w-100 h-screen d-flex flex-column align-center justify-center">
     <div
       class="signup-container d-flex flex-column align-center justify-center"
     >
-      <h1>Inscription</h1>
+      <h2 class="w-100 mb-4">Inscription</h2>
       <div class="w-100 d-flex flex-column justify-center mb-4">
         <v-form v-model="valid">
           <v-text-field
@@ -14,6 +14,8 @@
             v-model="email"
             :rules="[emailRules.required, emailRules.reel]"
             hide-details="auto"
+            density="compact"
+            color="primary"
             class="mb-4"
             validate-on="blur"
           ></v-text-field>
@@ -28,7 +30,9 @@
             :type="showPassword ? 'text' : 'password'"
             :rules="[passwordRules.required, passwordRules.length]"
             validate-on="blur"
-            label="Password"
+            label="Mot de passe"
+            density="compact"
+            color="primary"
             v-model="password"
             @click:appendInner="showPassword = !showPassword"
           ></v-text-field>
@@ -40,13 +44,15 @@
             prepend-inner-icon="lock-outline"
             :append-inner-icon="showConfirmPassword ? 'eye-off-outline' : 'eye-outline'"
             :type="showConfirmPassword ? 'text' : 'password'"
-            :rules="[samePassword.rule]"
+            :rules="[samePassword.same, samePassword.required]"
             validate-on="blur"
-            label="Confirm Password"
+            label="Confirmation du mot de passe"
+            density="compact"
+            color="primary"
             v-model="confirmedPassword"
             @click:appendInner="showConfirmPassword = !showConfirmPassword"
           ></v-text-field>
-          <v-btn class="w-100" variant="tonal" @click="signUp">S'INSCRIRE</v-btn>
+          <v-btn class="w-100 btnPrimary" @click="signUp">S'INSCRIRE</v-btn>
         </v-form>
       </div>
       <p class="mt-4">
@@ -84,7 +90,8 @@ const passwordRules = ref({
 });
 
 const samePassword = ref({
-  rule: (value) =>
+  required: (value) => !!value || "La confirmation du mot de passe est requise",
+  same: (value) =>
     password.value === value ||
     "Les deux mots de passe doivent être identiques",
 });
@@ -120,9 +127,19 @@ async function signUp() {
 </script>
 
 <style lang="scss" scoped>
+.signup-page {
+  background-color: #F3F5FF;
+}
 .signup-container {
   width: 100%;
   max-width: 350px;
-  padding: 20px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+a {
+  color: #0984e3;
 }
 </style>
