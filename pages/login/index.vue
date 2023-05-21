@@ -77,7 +77,9 @@ definePageMeta({
   layout: "empty",
 })
 
-const showMfaVerify = ref(false);
+const route = useRoute();
+
+const showMfaVerify = ref(!!route.query.mfatoken);
 
 const email = ref("");
 const password = ref("");

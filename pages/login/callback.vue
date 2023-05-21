@@ -10,14 +10,18 @@ definePageMeta({
 const route = useRoute()
 const router = useRouter()
 
-const accessToken = route.query.token
+const userStore = useUserStore()
 
-onMounted(() => {
-  if (accessToken) {
-    localStorage.setItem('access_token', accessToken)
-    router.push({ path: '/' })
-  } else {
-    router.push({ path: '/login' })
-  }
-})
+await userStore.fetchUser();
+
+if (route.query.token) {
+  userStore.setAccessToken(route.query.token);
+  await userStore.fetchUser();
+  router.push({ path: '/' })
+} else if (route.query.mfatoken) {
+  userStore.setMfaToken(route.query.mfatoken);
+  router.push({ path: `/login`, query: { mfatoken: route.query.mfatoken } })
+} else {
+  router.push({ path: '/login' })
+}
 </script>

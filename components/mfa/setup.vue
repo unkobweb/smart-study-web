@@ -56,7 +56,7 @@ async function validOTP() {
     icon.value = "checkmark-outline"
     useUserStore().fetchUser()
     setTimeout(() => {
-      useRouter().push({ path : "/profile" })
+      $emit("close")
     }, 2000)
   } else if (error.value?.statusCode === 400) {
     message.value = "Le code est invalide"

@@ -4,6 +4,27 @@
       class="signup-container d-flex flex-column align-center justify-center"
     >
       <h2 class="w-100 mb-4">Inscription</h2>
+      <div class="d-flex flex-column w-100">
+        <v-btn
+          class="social-btn btnSecondary mb-2"
+          id="google-login-btn"
+          prepend-icon="googleColored"
+          @click="logViaGoogle"
+          >Google</v-btn
+        >
+        <v-btn
+          class="social-btn btnSecondary"
+          id="linkedin-login-btn"
+          prepend-icon="linkedinColored"
+          @click="logViaLinkedin"
+          >LinkedIn</v-btn
+        >
+      </div>
+      <div class="d-flex flex-row align-center my-4 w-100">
+        <v-divider></v-divider>
+        <span class="mx-1">ou</span>
+        <v-divider></v-divider>
+      </div>
       <div class="w-100 d-flex flex-column justify-center mb-4">
         <v-form v-model="valid">
           <v-text-field
@@ -131,6 +152,14 @@ async function signUp() {
   await userStore.fetchUser();
 
   useRouter().push("/");
+}
+
+function logViaGoogle() {
+  window.location.href = "http://localhost:8080/auth/google";
+}
+
+function logViaLinkedin() {
+  window.location.href = "http://localhost:8080/auth/linkedin";
 }
 </script>
 
