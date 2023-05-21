@@ -8,7 +8,6 @@
       :key="el+ind"
       v-model="digits[ind]"
       :autofocus="ind === 0"
-      :placeholder="ind+1"
       maxlength="1"
       @keydown="handleKeyDown($event, ind)"
     >
@@ -77,12 +76,15 @@ const otpCont = ref(null)
 .digit-box {
     height: 70px;
     width: 50px;
-    border: 2px solid black;
+    border: 2px solid #1976D2;
+    color: #1976D2;
     border-radius: 5px;
     margin: 5px;
     text-align: center;
-    /* padding: 15px; */
-    font-size: 42px;
+    background-color: #E6EFFF;
+    outline: none;
+    font-size: 36px;
+    line-height: 0%;
 }
 
 /* add margin right to 3rd .digit-box */

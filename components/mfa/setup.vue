@@ -1,10 +1,17 @@
 <template>
-  <div class="w-100 h-screen d-flex flex-column align-center justify-center">
+  <v-card class="pa-8 rounded-lg">
+    <h2 class="mb-6">Mise en place de la double authentification</h2>
+    <v-icon class="close-icon" @click="$emit('close')">close-outline</v-icon>
     <div class="d-flex flex-row align-center">
       <div class="d-flex flex-column">
-        <h1 class="mb-4">Mise en place de la double authentification</h1>
-        <p class="mb-2">1 - Scannez le QR Code via une application de double authentification (Authy, Google Authenticator, etc.)</p>
-        <p class="mb-4">2 - Inscrivez dans le champs ci-dessous le code fournis par votre application de double authentification</p>
+        <div class="d-flex flex-row mb-2">
+          <v-avatar color="primary" class="mr-2 mt-1" size="x-small">1</v-avatar>
+          <p>Scannez le QR Code via une application de double authentification (Authy, Google Authenticator, etc.)</p>
+        </div>
+        <div class="d-flex flex-row mb-4">
+          <v-avatar color="primary" class="mr-2 mt-1" size="x-small">2</v-avatar>
+          <p>Inscrivez dans le champs ci-dessous le code fournis par votre application de double authentification</p>
+        </div>
         <!-- <test /> -->
         <OTP :digit-count="6" v-model="otp" :disabled="validating"/>
         <div v-if="message" class="d-flex flex-row align-center mt-4">
@@ -15,15 +22,11 @@
       </div>
       <canvas class="ml-8" id="canvas"></canvas>
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script setup>
 import QRCode from "qrcode";
-
-definePageMeta({
-  middleware: ["auth"]
-})
 
 const otp = ref(null);
 const message = ref(null);
@@ -71,7 +74,16 @@ const {data, error} = await useApiFetch("/auth/2fa/setup", {
 onMounted(() => {
   QRCode.toCanvas(document.getElementById("canvas"), data.value.qrCodeUrl, function (error) {
     if (error) console.error(error)
-    console.log('success!');
   })
 })
 </script>
+
+<style lang="scss" scoped>
+.close-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 1rem;
+  cursor: pointer;
+}
+</style>

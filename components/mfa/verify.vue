@@ -1,31 +1,30 @@
-<template> 
-  <div class="w-100 h-screen d-flex flex-column align-center justify-center">
+<template>
+  <v-card class="pa-8 rounded-lg d-flex align-center">
+    <v-icon size="x-large" fill="#1976D2">key</v-icon>
+    <h2>Double authentification</h2>
     <div class="d-flex flex-row align-center">
-      <div class="d-flex flex-column">
-        <h1 class="mb-4">Double authentification</h1>
-        <p class="mb-4">Inscrivez dans le champs ci-dessous le code fournis par votre application de double authentification</p>
+      <div class="d-flex flex-column align-center">
+        <p class="text-center subtitle mb-6">Inscrivez le code donné par votre application de double authentification</p>
+        <!-- <test /> -->
         <OTP :digit-count="6" v-model="otp" :disabled="validating"/>
         <div v-if="message" class="d-flex flex-row align-center mt-4">
           <v-icon v-if="icon">{{ icon }}</v-icon>
           <v-progress-circular v-else indeterminate></v-progress-circular>
-          <p class="ml-4">{{ message }}</p>
+          <p class="ml-2">{{ message }}</p>
         </div>
       </div>
-      <canvas class="ml-8" id="canvas"></canvas>
     </div>
-  </div>
+  </v-card>
 </template>
 
 <script setup>
-definePageMeta({
-  layout: "empty",
-})
-
 const otp = ref(null);
 const message = ref(null);
 const icon = ref(null);
 
 watch(otp, async (value) => {
+  message.value = null;
+  icon.value = null;
   if (value.length === 6) {
     await verify()
   }
@@ -50,7 +49,7 @@ async function verify() {
     await useUserStore().fetchUser()
     setTimeout(() => {
       useRouter().push("/")
-    }, 2000)
+    }, 1000)
   } else if (error.value?.statusCode === 400) {
     message.value = "Le code est invalide"
     icon.value = "close-outline"
@@ -60,3 +59,9 @@ async function verify() {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.subtitle {
+  font-size: 14px;
+}
+</style>
