@@ -7,7 +7,8 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "cypress": "cypress open"
+    "cypress": "cypress open",
+    "test:cy": "cypress run --browser firefox"
   },
   "devDependencies": {
     "@nuxt/devtools": "^0.4.6",
