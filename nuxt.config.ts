@@ -1,8 +1,10 @@
+import vuetify from "vite-plugin-vuetify";
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   css: [
     'vuetify/lib/styles/main.sass',
-    '~/assets/main.scss'
+    '~/assets/style/main.scss',
   ],
 
   build: {
@@ -14,6 +16,7 @@ export default defineNuxtConfig({
       'process.env.DEBUG': false,
     },
   },
+
 
   imports: {
     dirs: [
@@ -35,6 +38,6 @@ export default defineNuxtConfig({
   },
 
   devtools: {
-    enabled: true
+    enabled: false
   }
 })

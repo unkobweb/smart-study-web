@@ -1,7 +1,28 @@
 <template>
-  <div class="w-100 h-screen d-flex flex-column align-center justify-center">
+  <div class="login-page w-100 h-screen d-flex flex-column align-center justify-center">
     <div class="login-container d-flex flex-column align-center justify-center">
-      <h1>Connexion</h1>
+      <h2 class="w-100 mb-4">Connexion</h2>
+      <div class="d-flex flex-column w-100">
+        <v-btn
+          class="social-btn btnSecondary mb-2"
+          id="google-login-btn"
+          prepend-icon="googleColored"
+          @click="logViaGoogle"
+          >Google</v-btn
+        >
+        <v-btn
+          class="social-btn btnSecondary"
+          id="linkedin-login-btn"
+          prepend-icon="linkedinColored"
+          @click="logViaLinkedin"
+          >LinkedIn</v-btn
+        >
+      </div>
+      <div class="d-flex flex-row align-center my-4 w-100">
+        <v-divider></v-divider>
+        <span class="mx-1">ou</span>
+        <v-divider></v-divider>
+      </div>
       <div class="w-100 d-flex flex-column justify-center mb-4">
         <v-form v-model="valid">
           <v-text-field
@@ -13,6 +34,8 @@
             hide-details="auto"
             label="Email"
             v-model="email"
+            density="compact"
+            color="primary"
             class="mb-4"
           ></v-text-field>
 
@@ -28,28 +51,13 @@
             :rules="[passwordRules.required]"
             hide-details="auto"
             validate-on="blur"
+            density="compact"
+            color="primary"
             class="mb-4"
           ></v-text-field>
-          <v-btn class="w-100" variant="tonal" @click="signIn">SE CONNECTER</v-btn>
+          <v-btn class="w-100 btnPrimary" @click="signIn">Se connecter</v-btn>
         </v-form>
       </div>
-      <v-btn-group class="d-flex flex-row">
-        <v-btn
-          id="google-login-btn"
-          prepend-icon="google"
-          variant="tonal"
-          @click="logViaGoogle"
-          class="mr-2"
-          >Google</v-btn
-        >
-        <v-btn
-          id="linkedin-login-btn"
-          prepend-icon="linkedin"
-          variant="tonal"
-          @click="logViaLinkedin"
-          >Linkedin</v-btn
-        >
-      </v-btn-group>
       <p class="mt-4">
         Pas encore de compte ? <NuxtLink to="/signup">S'inscrire</NuxtLink>
       </p>
@@ -132,9 +140,25 @@ function logViaLinkedin() {
 </script>
 
 <style lang="scss" scoped>
+.login-page {
+  background-color: #F3F5FF;
+}
 .login-container {
   width: 100%;
   max-width: 350px;
-  padding: 20px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.social-btn {
+  width: 100%;
+  height: auto;
+  padding: 10px;
+}
+
+a {
+  color: #0984e3;
 }
 </style>
