@@ -11,7 +11,8 @@
             :title="user.enabled2Fa ? 'Double authentification activée' : 'Double authentification'" 
             :text="alertMsg"
             :type="user.enabled2Fa ? 'success' : 'warning'"
-            @click="showSetup2Fa = true"
+            :class="!user.enabled2Fa ? 'clickable' : ''"
+            @click="user.enabled2Fa ? showSetup2Fa = false : showSetup2Fa = true"
           >
             <template v-slot:prepend>
               <v-icon fill="white">{{ user.enabled2Fa ? 'lock-outline' : 'unlock-outline' }}</v-icon>
@@ -82,3 +83,9 @@ const alertMsg = computed(() => {
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.clickable {
+  cursor: pointer;
+}
+</style>
