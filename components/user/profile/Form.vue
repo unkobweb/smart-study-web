@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="d-flex justify-center mb-2">
+      <UserProfilePictureUpload :editable="true" />
+    </div>
     <h3 class="mb-5">Informations personnelles</h3>
     <v-row class="ml-1 mr-5">
       <v-text-field
