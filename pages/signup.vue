@@ -114,6 +114,14 @@ async function signUp() {
     },
   });
 
+  if (error.value) {
+    $event.$emit("show-snackbar", {
+      message: "Une erreur est survenue lors de l'inscription",
+      type: "error",
+    });
+    return;
+  }
+
   $event.$emit("show-snackbar", {
     message: "Inscription réussie !",
     type: "success",
