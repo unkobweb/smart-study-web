@@ -137,12 +137,16 @@ async function signIn() {
   useRouter().push({ path: "/" });
 }
 
+const apiBaseUrl = process.env.NODE_ENV === "staging" ? 
+  "https://staging.api.smart-study.fr" : "http://localhost:8080"; 
+
 function logViaGoogle() {
-  window.location.href = "http://localhost:8080/auth/google";
+  console.log(process.env.NODE_ENV);
+  window.location.href = apiBaseUrl+"/auth/google";
 }
 
 function logViaLinkedin() {
-  window.location.href = "http://localhost:8080/auth/linkedin";
+  window.location.href = apiBaseUrl+"/auth/linkedin";
 }
 </script>
 
