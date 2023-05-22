@@ -137,16 +137,14 @@ async function signIn() {
   useRouter().push({ path: "/" });
 }
 
-const apiBaseUrl = process.env.NODE_ENV === "staging" ? 
-  "https://staging.api.smart-study.fr" : "http://localhost:8080"; 
+const { API_URL } = useRuntimeConfig()
 
 function logViaGoogle() {
-  console.log(process.env.NODE_ENV);
-  window.location.href = apiBaseUrl+"/auth/google";
+  window.location.href = API_URL+"/auth/google";
 }
 
 function logViaLinkedin() {
-  window.location.href = apiBaseUrl+"/auth/linkedin";
+  window.location.href = API_URL+"/auth/linkedin";
 }
 </script>
 
