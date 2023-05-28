@@ -89,6 +89,10 @@ const { $event } = useNuxtApp();
 const userStore = useUserStore();
 const config = useRuntimeConfig();
 
+onMounted(() => {
+  console.log({config});
+})
+
 definePageMeta({
   layout: "empty",
 })
