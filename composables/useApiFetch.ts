@@ -1,7 +1,9 @@
 import { storeToRefs } from "pinia"
 
 export default async function (url: string, options: any = {}) {
-  options.baseURL = 'http://localhost:8080'
+  const config = useRuntimeConfig()
+
+  options.baseURL = config.API_URL
 
   const { accessToken } = storeToRefs(useUserStore())
 
