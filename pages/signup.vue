@@ -89,10 +89,6 @@ const { $event } = useNuxtApp();
 const userStore = useUserStore();
 const config = useRuntimeConfig();
 
-onMounted(() => {
-  console.log({config});
-})
-
 definePageMeta({
   layout: "empty",
 })
@@ -160,11 +156,11 @@ async function signUp() {
 }
 
 function logViaGoogle() {
-  window.location.href = config.API_URL+"/auth/google";
+  window.location.href = config.public.API_URL+"/auth/google";
 }
 
 function logViaLinkedin() {
-  window.location.href = config.API_URL+"/auth/linkedin";
+  window.location.href = config.public.API_URL+"/auth/linkedin";
 }
 </script>
 
