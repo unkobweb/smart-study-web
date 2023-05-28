@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-ENV API_URL="https://staging.api.smart-study.fr"
+ENV API_URL=https://staging.api.smart-study.fr
 
 COPY . /app
 
