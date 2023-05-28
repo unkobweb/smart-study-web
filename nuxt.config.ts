@@ -1,4 +1,4 @@
-import vuetify from "vite-plugin-vuetify";
+console.log(process.env.API_URL)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
