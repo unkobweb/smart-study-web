@@ -53,8 +53,8 @@ const handleUpload = async (e) => {
 watch(() => user.value, async () => {
   console.log(user.value)
   if (!user.value.profilePicture) return
-  const { data, error } = await useApiFetch('/media/'+user.value.profilePicture.uuid)
-  imgUrl.value = data.value
+  await useUserStore().fetchUser()
+  imgUrl.value = user.value.profilePicture.url
 }, {immediate: true})
 
 </script>
