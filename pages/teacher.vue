@@ -23,7 +23,6 @@
       <ul>
         <li v-for="course in courses" :key="course.id">{{ course.title }}</li>
       </ul>
-      <button @click="getCourses">Actualiser</button>
     </div>
   </div>
 </template>
@@ -40,6 +39,8 @@ definePageMeta({
 const { user } = storeToRefs(useUserStore());
 const courseTitle = ref("");
 let courses = ref([]);
+const { data, pending, error } = await useApiFetch("/courses/me")
+courses.value = data.value;
 
 const titleRules = ref({
   required: (value) => !!value || "Le titre est requis",
@@ -52,13 +53,10 @@ async function addCourse() {
       title: courseTitle.value,
     },
   });
+  courses.value.push(data.value)
   courseTitle.value = ""
 }
 
-async function getCourses() {
-  console.log("inside");
-  await useApiFetch("/courses", {
-    method: "GET",
-  }).then((res) => (courses.value = res.data.value));
-}
+
+ 
 </script>
