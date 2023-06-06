@@ -1,28 +1,22 @@
 <template>
   <div>
-    <div class="w-100 d-flex flex-column justify-center mb-4">
-      <v-form v-model="valid">
-        <v-text-field
-          id="course-title-input"
-          variant="outlined"
-          label="Titre"
-          v-model="courseTitle"
-          :rules="[titleRules.required]"
-          hide-details="auto"
-          density="compact"
-          color="primary"
-          class="mb-4"
-        ></v-text-field>
-        <v-btn class="w-100 btnPrimary" @click="addCourse"
-          >Ajouter un cours</v-btn
-        >
-      </v-form>
-    </div>
-    <div class="w-100 d-flex flex-column justify-center mb-4">
-      <h1>Tous vos cours</h1>
-      <ul>
-        <li v-for="course in courses" :key="course.id">{{ course.title }}</li>
-      </ul>
+    <div class="w-100 d-flex flex-column justify-center mb-4 pa-5">
+      <div class="d-flex flex-row align-center justify-space-between mb-2">
+        <h1>Tous vos cours</h1>
+        <TeacherCreateCourse />
+      </div>
+      <div class="d-flex flex-row flex-wrap">
+        <v-card @click="goToCourse(course.uuid)" class="mr-4 mb-4" width="400" v-for="course in courses" :key="course.id" elevation="4">
+          <v-img
+            height="200"
+            src="/default-course.png"
+            class="text-white"
+          ></v-img>
+          <v-card-title class="d-flex flex-row justify-space-between w-100">
+            <h4>{{ course.title }}</h4>
+          </v-card-title>
+        </v-card>
+      </div>
     </div>
   </div>
 </template>
@@ -37,26 +31,13 @@ definePageMeta({
 
 // permet de récupérer les données de l'utilisateur qui sont stockées dans le store
 const { user } = storeToRefs(useUserStore());
-const courseTitle = ref("");
-let courses = ref([]);
-const { data, pending, error } = await useApiFetch("/courses/me")
-courses.value = data.value;
+const { courses } = storeToRefs(useTeacherStore());
 
-const titleRules = ref({
-  required: (value) => !!value || "Le titre est requis",
-});
+const { fetchUserCourses } = useTeacherStore();
+await fetchUserCourses();
 
-async function addCourse() {
-  const { data, pending, error } = await useApiFetch("/courses", {
-    method: "POST",
-    body: {
-      title: courseTitle.value,
-    },
-  });
-  courses.value.push(data.value)
-  courseTitle.value = ""
+function goToCourse(courseUuid) {
+  const router = useRouter();
+  router.push(`/teacher/course/${courseUuid}`);
 }
-
-
- 
 </script>
