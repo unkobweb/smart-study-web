@@ -17,6 +17,9 @@
     "nuxt": "^3.4.3"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.27.0",
+    "@editorjs/header": "^2.7.0",
+    "@editorjs/list": "^1.8.0",
     "@mdi/font": "^7.2.96",
     "@pinia/nuxt": "^0.4.8",
     "codes-postaux": "^4.0.0",
