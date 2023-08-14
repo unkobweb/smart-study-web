@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia"
 export default async function (url: string, options: any = {}) {
   options.baseURL = 'http://localhost:8080'
 
-  const { accessToken } = storeToRefs(useUserStore())
+  const accessToken = useCookie('access_token')
 
   if (accessToken.value) {
     options = {

@@ -62,5 +62,6 @@ const { createCourse } = useTeacherStore();
 async function addCourse() {
   await createCourse(courseTitle.value)
   courseTitle.value = ""
+  dialog.value = false
 }
 </script>
