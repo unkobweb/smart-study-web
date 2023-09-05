@@ -2,6 +2,7 @@
   <div class="ma-8">
     <div class="d-flex flex-row align-center mb-4">
       <h1 class="mr-4">{{ course.title }}</h1>
+      <v-btn class="btnSecondary" @click="publishCourse">Publier le cours</v-btn>
     </div>
     <v-tabs
       v-model="tab"
@@ -31,4 +32,13 @@ const { course } = storeToRefs(useCourseStore());
 const { fetchCourseDetails } = useCourseStore();
 
 await fetchCourseDetails(route.params.uuid);
+
+async function publishCourse() {
+  await useApiFetch(`/courses/${course.value.uuid}`, {
+    method: 'PATCH',
+    body: {
+      isPublished: true
+    }
+  })
+}
 </script>

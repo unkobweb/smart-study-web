@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-app-bar class="d-flex flex-row align-center justify-space-between">
-      <v-app-bar-title>Smart Study</v-app-bar-title>
+      <v-app-bar-title>
+        <NuxtLink to="/">
+          Smart Study
+        </NuxtLink>
+      </v-app-bar-title>
       <div class="d-flex flex-row align-center" v-if="user">
         <v-menu
           open-on-hover
