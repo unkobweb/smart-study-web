@@ -4,7 +4,6 @@
   
     async function fetchCourseDetails(uuid: string) {
       const { data, pending, error } = await useApiFetch(`/courses/${uuid}`);
-      console.log(data.value)
       course.value = data.value
     }
 
@@ -39,7 +38,11 @@
         }
       });
       // if one coursePart is in this course, add the chapter to it
-      if (course.value.courseParts.find((part: any) => part.uuid === coursePartUuid)) {
+      const coursePart = course.value.courseParts.find((part: any) => part.uuid === coursePartUuid)
+      if (coursePart) {
+        if (!coursePart.courseChapters) {
+          coursePart.courseChapters = []
+        }
         course.value.courseParts.find((part: any) => part.uuid === coursePartUuid).courseChapters.push(data.value)
       }
     }

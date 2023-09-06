@@ -1,8 +1,12 @@
 <template>
   <div class="ma-8">
-    <div class="d-flex flex-row align-center mb-4">
+    <div class="d-flex flex-row align-center justify-space-between mb-4">
       <h1 class="mr-4">{{ course.title }}</h1>
-      <v-btn class="btnSecondary" @click="publishCourse">Publier le cours</v-btn>
+      <v-btn v-if="!course.isPublished" class="btnSecondary" @click="publishCourse">Publier le cours</v-btn>
+      <div v-else class="d-flex flex-row align-center">
+        <v-icon fill="#2ecc71" icon="checkmark-circle-outline"></v-icon>
+        <p class="mb-0 pb-0 ml-2">Cours publié</p>
+      </div>
     </div>
     <v-tabs
       v-model="tab"

@@ -63,7 +63,7 @@ const props = defineProps({
   }
 })
 
-const price = ref(`${props.course.price}` ?? '0.00')
+const price = ref(props.course.price ? `${props.course.price}` : '0.00')
 const title = ref(props.course.title)
 const description = ref(props.course.description)
 
