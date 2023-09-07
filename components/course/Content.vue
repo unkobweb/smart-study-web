@@ -73,7 +73,7 @@
             </div>
           </div> 
           <div class="document-upload-container" @click="chooseDocument">
-            <v-icon icon="plus-circle-outline"></v-icon>
+            <v-icon fill="#636e72" icon="plus-circle-outline"></v-icon>
             <p>Ajouter un ou plusieurs documents</p>
           </div>
           <v-file-input ref="documentInput" class="d-none" multiple prepend-icon="file-outline" label="Documents du chapitres" @update:modelValue="handleUploadDocuments"></v-file-input>
