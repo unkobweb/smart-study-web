@@ -6,7 +6,7 @@
         <TeacherCreateCourse />
       </div>
       <div class="d-flex flex-row flex-wrap">
-        <Course v-for="course in courses" :key="course.uuid" :course="course"/>
+        <Course v-for="course in courses" :key="course.uuid" :course="course" :isTeacher="true"/>
       </div>
     </div>
   </div>

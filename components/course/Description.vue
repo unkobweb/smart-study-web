@@ -1,5 +1,5 @@
 <template>
-  <div class="pt-2 w-75">
+  <div class="pt-2 w-100">
     <div class="d-flex flex-row w-max w-100">
       <div class="d-flex flex-column w-100">
         <v-text-field
@@ -66,10 +66,12 @@
         ></v-textarea>
       </div>
       <div class="d-flex flex-column w-100 ml-4">
-
-        <div class="d-flex flex-row mb-2">
-          <h2>Miniature</h2>
-          <v-btn v-if="course.thumbnail?.url" class="btnSecondary ml-2" @click="() => course.thumbnail = null">Changer la miniature</v-btn>
+        <div class="d-flex flex-column mb-2">
+          <div class="d-flex flex-row">
+            <h2>Miniature</h2>
+            <v-btn v-if="course.thumbnail?.url" class="btnSecondary ml-2" @click="() => course.thumbnail = null">Changer la miniature</v-btn>
+          </div>
+          <p>Cette image sera affiché sur la page d'accueil pour présenter votre cours</p>
         </div>
         <div v-if="course.thumbnail?.url">
           <v-img
@@ -90,6 +92,33 @@
           label="Image du cours"
           prepend-icon="image-outline"  
           @update:modelValue="handleUploadThumbnail"
+        ></v-file-input>
+      </div>
+      <div class="d-flex flex-column w-100 ml-4">
+        <div class="d-flex flex-column mb-2">
+          <div class="d-flex flex-row">
+            <h2>Vidéo de présentation</h2>
+            <v-btn class="btnSecondary ml-2" @click="() => course.video = null">Changer la vidéo</v-btn>
+          </div>
+          <p>Cette vidéo sera montrée sur la page de votre cours pour présenter votre cours</p>
+        </div>
+        <div v-if="course.video?.url">
+          <video width="400" controls controlsList="nodownload" oncontextmenu="return false;">
+            <source :src="course.video?.url" type="video/mp4">
+            Your browser does not support HTML video.
+          </video>
+        </div>
+        <div v-else class="thumbnail-upload-container" @click="chooseVideo">
+          <v-icon fill="#636e72" icon="video-outline"></v-icon>
+          <p>Cliquez ici pour ajouter une vidéo de présentation à votre cours</p>
+        </div>
+        <v-file-input 
+          class="d-none"
+          ref="videoInput"
+          accept="video/*" 
+          label="Image du cours"
+          prepend-icon="image-outline"  
+          @update:modelValue="handleUploadVideo"
         ></v-file-input>
       </div>
     </div>
@@ -113,6 +142,7 @@ function removeJob(uuid) {
   courseJobs.value = courseJobs.value.filter(job => job !== uuid)
 }
 
+const videoInput = ref()
 const imageInput = ref()
 
 const price = ref(props.course.price ? `${props.course.price}` : '0.00')
@@ -127,6 +157,29 @@ function updateCourse() {
 
 function chooseImage() {
   imageInput.value.click()
+}
+
+function chooseVideo() {
+  videoInput.value.click()
+}
+
+async function handleUploadVideo(files) {
+  if (!files.length) return
+  const file = files[0]
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('key', `${props.course.uuid}/${file.name}`)
+  const {data, error} = await useApiFetch('/media/upload', {
+    method: 'POST',
+    body: formData
+  })
+  const {data: updatedCourse} = await useApiFetch(`/courses/${props.course.uuid}`, {
+    method: 'PATCH',
+    body: {
+      video: data.value.uuid
+    }
+  })
+  props.course.video = updatedCourse.value.video
 }
 
 async function handleUploadThumbnail(files) {

@@ -23,10 +23,15 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  isTeacher: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 function goToCourse(courseUuid) {
   const router = useRouter();
-  router.push(`/teacher/course/${courseUuid}`);
+  if (props.isTeacher) router.push(`/teacher/course/${courseUuid}`);
+  else router.push(`/course/${courseUuid}`);
 }
 </script>
