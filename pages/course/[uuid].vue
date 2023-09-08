@@ -1,8 +1,12 @@
 <template>
   <div class="course-container">
     <div class="mb-4 d-flex flex-row align-center justify-space-between">
-      <h1>{{ course.title }}</h1>
-      <v-btn class="btnPrimary ml-4">Acheter le cours</v-btn>
+      <h1>{{ course.title }} - {{ course.price/100 }}€</h1>
+      <v-btn v-if="purchases.length === 0" class="btnPrimary ml-4" @click="buyCourse">Acheter le cours</v-btn>
+      <div v-else class="d-flex flex-row align-center">
+        <v-icon fill="#2ecc71" icon="checkmark-circle-outline"></v-icon>
+        <p class="mb-0 pb-0 ml-2">Vous avez acheté ce cours</p>
+      </div>
     </div>
     <div class="d-flex flex-row">
       <div class="d-flex flex-column">
@@ -12,7 +16,7 @@
         </video>
         <div class="d-flex flex-row mt-4">
           <NuxtLink class="cursor" v-for="courseJob in course.courseJobs" :key="courseJob.uuid" :to="`/jobs/${courseJob.job.uuid}`">
-            <v-chip color="primary" class="mr-2" >
+            <v-chip color="primary" class="mr-2 cursor" >
               {{ courseJob.job.name }}
             </v-chip>
           </NuxtLink>
@@ -49,6 +53,19 @@ const route = useRoute();
 const { data: course } = await useApiFetch(`/courses/${route.params.uuid}/preview`);
 
 const expansion = course.value.courseParts.map(cP => cP.uuid)
+
+const {data: purchases} = await useApiFetch(`/purchase/${route.params.uuid}`)
+
+async function buyCourse() {
+  const {data} = await useApiFetch(`/purchase/create-checkout-session`, {
+    method: 'POST',
+    body: {
+      course: course.value.uuid
+    }
+  })
+  // redirect to checkout page
+  window.location.href = data.value
+}
 </script>
 
 <style lang="scss">
@@ -56,7 +73,7 @@ const expansion = course.value.courseParts.map(cP => cP.uuid)
   max-width: 1200px;
   margin: 20px auto;
 }
-.cursor {
-  cursor: pointer;
+.cursor:hover {
+  cursor: pointer !important;
 }
 </style>

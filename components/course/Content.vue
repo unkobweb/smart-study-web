@@ -88,7 +88,6 @@
           density="compact"
           color="primary"
           v-model="title"
-          @update:modelValue="handleUploadDocuments"
         ></v-text-field>
         <div id="editorContainer"></div>
         <v-btn class="btnPrimary" @click="updateItem">Sauvegarder</v-btn>

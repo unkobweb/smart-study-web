@@ -13,6 +13,7 @@
     ></v-img>
     <v-card-title class="d-flex flex-row justify-space-between w-100">
       <h4>{{ course.title }}</h4>
+      <p>{{ course.price/100 }}€</p>
     </v-card-title>
   </v-card>
 </template>

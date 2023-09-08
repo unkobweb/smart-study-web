@@ -98,7 +98,7 @@
         <div class="d-flex flex-column mb-2">
           <div class="d-flex flex-row">
             <h2>Vidéo de présentation</h2>
-            <v-btn class="btnSecondary ml-2" @click="() => course.video = null">Changer la vidéo</v-btn>
+            <v-btn v-if="course.video" class="btnSecondary ml-2" @click="() => course.video = null">Changer la vidéo</v-btn>
           </div>
           <p>Cette vidéo sera montrée sur la page de votre cours pour présenter votre cours</p>
         </div>
@@ -152,7 +152,7 @@ const description = ref(props.course.description)
 function updateCourse() {
   const { updateCourse } = useCourseStore()
   const newPrice = parseFloat(price.value.replace(',', '.'))
-  updateCourse({uuid: props.course.uuid, title: title.value, description: description.value, price: newPrice, jobs: courseJobs.value})
+  updateCourse({uuid: props.course.uuid, title: title.value, description: description.value, price: Math.floor(newPrice*100), jobs: courseJobs.value})
 }
 
 function chooseImage() {
