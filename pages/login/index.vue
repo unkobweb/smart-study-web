@@ -137,7 +137,7 @@ async function signIn() {
   useRouter().push({ path: "/" });
 }
 
-const { API_URL } = useRuntimeConfig()
+const { API_URL } = useRuntimeConfig().public
 
 function logViaGoogle() {
   window.location.href = API_URL+"/auth/google";

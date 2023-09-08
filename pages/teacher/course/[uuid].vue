@@ -28,21 +28,24 @@
 
 <script setup>
 import { storeToRefs } from "pinia";
+const { $event } = useNuxtApp();
 
 const tab = ref("one")
 const route = useRoute();
 
 const { course } = storeToRefs(useCourseStore());
-const { fetchCourseDetails } = useCourseStore();
+const { fetchCourseDetails, updateCourse } = useCourseStore();
 
 await fetchCourseDetails(route.params.uuid);
 
 async function publishCourse() {
-  await useApiFetch(`/courses/${course.value.uuid}`, {
-    method: 'PATCH',
-    body: {
-      isPublished: true
-    }
+  await updateCourse({
+    uuid: course.value.uuid,
+    isPublished: true
   })
+  $event.$emit("show-snackbar", {
+    message: "Cours publié avec succès !",
+    type: "success",
+  });
 }
 </script>
