@@ -7,6 +7,7 @@ export const useUserStore = defineStore('user', () => {
 
   const accessToken = ref('')
   function setAccessToken(token: string) {
+    useCookie('access_token').value = token
     accessToken.value = token
   }
 

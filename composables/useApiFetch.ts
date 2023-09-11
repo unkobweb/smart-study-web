@@ -5,7 +5,7 @@ export default async function (url: string, options: any = {}) {
 
   options.baseURL = config.API_URL
 
-  const { accessToken } = storeToRefs(useUserStore())
+  const accessToken = useCookie('access_token')
 
   if (accessToken.value) {
     options = {

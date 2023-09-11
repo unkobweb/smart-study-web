@@ -1,7 +1,11 @@
 <template>
   <div>
     <v-app-bar class="d-flex flex-row align-center justify-space-between">
-      <v-app-bar-title>Smart Study</v-app-bar-title>
+      <v-app-bar-title>
+        <NuxtLink to="/">
+          Smart Study
+        </NuxtLink>
+      </v-app-bar-title>
       <div class="d-flex flex-row align-center" v-if="user">
         <v-menu
           open-on-hover
@@ -10,7 +14,7 @@
           <template v-slot:activator="{ props }">
             <div v-bind="props" class="d-flex flex-row align-center">
               <v-avatar :image="userImage" class="mr-2"></v-avatar>
-              <p class="mr-3 user-email">{{ user.email }}</p>
+              <p class="mr-3 user-email">{{ userDesignation }}</p>
             </div>
           </template>
 
@@ -43,6 +47,13 @@ import { storeToRefs } from "pinia"
 
 const userStore = useUserStore()
 const { user } = storeToRefs(userStore)
+
+const userDesignation = computed(() => {
+  if (user.value.firstName && user.value.lastName) {
+    return `${user.value.firstName} ${user.value.lastName}`
+  }
+  return user.value.email
+})
 
 const userImage = computed(() => {
   if (user.value?.profilePicture) {

@@ -10,4 +10,6 @@ useSeoMeta({
   title: "Smart Study",
   description: "Smart Study"
 })
+
+console.log("Layout empty")
 </script>
