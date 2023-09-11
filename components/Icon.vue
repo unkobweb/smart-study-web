@@ -35,6 +35,11 @@ const viewBox = ref("0 0 24 24");
 const svgContent = ref(null);
 
 watch(() => props.icon, async () => {
+  if (props.icon === 'none') {
+    viewBox.value = "0 0 24 24";
+    svgContent.value = null;
+    return;
+  }
   if (eva.icons[props.icon]?.contents) {
     viewBox.value = "0 0 24 24";
     svgContent.value = eva.icons[props.icon].contents;

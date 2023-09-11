@@ -3,7 +3,7 @@ import ImageTool from "@editorjs/image";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Table from "@editorjs/table";
-import CodeBox from "@bomdi/codebox";
+import editorjsCodeflask from '@calumk/editorjs-codeflask';
 import NestedList from "@editorjs/nested-list";
 
 
@@ -23,6 +23,7 @@ export default defineNuxtPlugin((nuxtApp) => {
         options.onChange(data)
       },
       placeholder: "Commencez à écrire...",
+      readOnly: options.readOnly || false,
       tools: {
         header: {
           class: Header,
@@ -65,15 +66,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             cols: 3,
           },
         },
-        codeBox: {
-          class: CodeBox,
-          config: {
-            themeURL:
-              "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/dracula.min.css", // Optional
-            themeName: "atom-one-dark", // Optional
-            useDefaultTheme: "light", // Optional. This also determines the background color of the language select drop-down
-          },
-        },
+        code : editorjsCodeflask
       },
     });
   };
