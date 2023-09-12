@@ -35,17 +35,47 @@
         </v-expansion-panel>
       </v-expansion-panels>
     </div>
-    <div class="pa-8 w-100" v-if="chapter">
-      <div class="d-flex flex-row align-center justify-space-between">
+    <div class="pa-8 w-100 course-content" v-if="chapter">
+      <div class="d-flex flex-row align-center justify-space-between mb-4">
         <h1>{{ chapter.title }}</h1>
-        <v-btn color="primary" @click="() => completeChapter(!completed)">{{ completed ? "Ne pas marquer comme terminé" : "Marquer comme terminé" }}</v-btn>
+        <v-btn color="primary" @click="() => completeChapter(!completed)">{{ completed ? "Marquer comme en cours" : "Marquer comme terminé" }}</v-btn>
       </div>
-      <div>
-        <video v-if="chapter.video" :key="chapter.uuid" width="800" controls controlsList="nodownload" oncontextmenu="return false;">
-          <source :src="chapter.video.url" type="video/mp4">
-          Your browser does not support HTML video.
-        </video>
-        <div :id="`editor${chapter.uuid}`" :key="chapter.uuid"></div>
+      <div class="d-flex flex-row w-100">
+        <div class="d-flex flex-column align-center w-75 main-container">
+          <video v-if="chapter.video" :key="chapter.uuid" controls controlsList="nodownload" oncontextmenu="return false;">
+            <source :src="chapter.video.url" type="video/mp4">
+            Your browser does not support HTML video.
+          </video>
+          <div v-else class="d-flex flex-column align-center mt-8">
+            <v-icon icon="video-off-outline"></v-icon>
+            <p>Aucune vidéo pour ce chapitre</p>
+          </div>
+          <div class="w-100 mt-8" :id="`editor${chapter.uuid}`" :key="chapter.uuid"></div>
+          <div class="d-flex flex-column align-center" v-if="!chapter.description.blocks || chapter.description.blocks.length === 0">
+            <v-icon icon="file-text-outline"></v-icon>
+            <p>Aucune description pour ce chapitre</p>
+          </div>
+        </div>
+        <div class="w-25 docs-container">
+          <h2 class="mb-4">Documents</h2>
+          <div class="d-flex flex-row flex-wrap" v-if="chapter.documents.length">
+            <div class="document-container elevation-2" v-for="doc in chapter.documents" :key="doc.uuid">
+              <v-icon fill="#636e72" icon="file-text-outline"></v-icon>
+              <p>{{ doc.name }}</p>
+              <div class="d-flex flex-row align-center">
+                <v-tooltip location="bottom" text="Voir le document">
+                  <template v-slot:activator="{ props }">
+                    <v-icon fill="#636e72" class="delete-doc mt-3" v-bind="props" icon="external-link-outline" @click="() => openDocument(doc)"></v-icon>
+                  </template>
+                </v-tooltip>
+              </div>
+            </div> 
+          </div>
+          <div class="d-flex flex-column align-center" v-else>
+            <v-icon icon="file-remove-outline"></v-icon>
+            <p>Aucun document pour ce chapitre</p>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -67,6 +97,20 @@ onMounted(() => {
 
 const selectedPart = ref(null)
 const selectedChapter = ref(null)
+
+function getFirstUncompletedChapter() {
+  for (const part of props.course.courseParts) {
+    for (const chapter of part.courseChapters) {
+      if (chapter.userChapterCompletions.length === 0) {
+        selectedPart.value = part.uuid
+        selectedChapter.value = chapter.uuid
+        return
+      }
+    }
+  }
+}
+
+getFirstUncompletedChapter()
 
 const chapter = computed(() => {
   if (!selectedPart.value || !selectedChapter.value) return null
@@ -106,17 +150,52 @@ async function completeChapter(completed) {
   }
 }
 
+function openDocument(doc) {
+  window.open(doc.url, '_blank')
+}
+
 const { $editor } = useNuxtApp()
 
-watch(() => chapter.value, async (newChapter) => {
-  if (!newChapter || !newChapter.description.blocks || newChapter.description.blocks.length === 0) return
-  await $editor({id: `editor${newChapter.uuid}`, readOnly: true, data: newChapter.description})
+onMounted(() => {
+  watch(() => chapter.value, async (newChapter) => {
+    if (!newChapter || !newChapter.description.blocks || newChapter.description.blocks.length === 0) return
+    await $editor({id: `editor${newChapter.uuid}`, readOnly: true, data: newChapter.description})
+  }, {immediate: true})
 })
 </script>
 
 <style lang="scss">
-.course-sidebar {
+.docs-container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  height: fit-content;
+  gap: 5px;
+  .document-container {
+    background-color: #fff;
+    margin-right: 10px;
+    margin-bottom: 10px;
+  }
+}
+.course-content {
+  overflow: auto;
   height: calc(100vh - 60px) !important;
+  max-height: calc(100vh - 60px) !important;
+}
+.main-container {
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  margin-right: 10px;
+  video {
+    width: 100%;
+    border-radius: 5px;
+  }
+}
+.course-sidebar {
+  overflow: auto;
+  height: calc(100vh - 60px) !important;
+  max-height: calc(100vh - 60px) !important;
   width: 25vw;
   min-width: 300px;
   max-width: 400px;
