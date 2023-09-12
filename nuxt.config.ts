@@ -20,6 +20,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       API_URL: process.env.API_URL || 'http://localhost:8080',
+      MEILISEARCH_HOST: process.env.MEILISEARCH_HOST || 'http://localhost:7700'
     }
   },
 

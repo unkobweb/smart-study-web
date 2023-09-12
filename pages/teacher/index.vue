@@ -6,23 +6,7 @@
         <TeacherCreateCourse />
       </div>
       <div class="d-flex flex-row flex-wrap">
-        <v-card
-          @click="goToCourse(course.uuid)"
-          class="mr-4 mb-4"
-          width="400"
-          v-for="course in courses"
-          :key="course.id"
-          elevation="4"
-        >
-          <v-img
-            height="200"
-            src="/default-course.png"
-            class="text-white"
-          ></v-img>
-          <v-card-title class="d-flex flex-row justify-space-between w-100">
-            <h4>{{ course.title }}</h4>
-          </v-card-title>
-        </v-card>
+        <Course v-for="course in courses" :key="course.uuid" :course="course" :isTeacher="true"/>
       </div>
     </div>
   </div>
@@ -42,9 +26,4 @@ const { courses } = storeToRefs(useTeacherStore());
 
 const { fetchUserCourses } = useTeacherStore();
 await fetchUserCourses();
-
-function goToCourse(courseUuid) {
-  const router = useRouter();
-  router.push(`/teacher/course/${courseUuid}`);
-}
 </script>

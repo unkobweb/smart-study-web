@@ -3,7 +3,7 @@
     <div @click="openFileInput" class="edit-overlay d-flex align-center justify-center" :class="!editable ? 'd-none' : ''">
       <v-icon fill="#c8d6e5">edit-outline</v-icon>
     </div>
-    <img class="profile-picture" v-if="imgUrl" :src="imgUrl" alt="">
+    <img class="profile-picture" v-if="imgUrl" :src="user.profilePicture?.url ?? '/default.jpg'" alt="">
     <v-file-input class="fileinput" ref="inputfile" @update:modelValue="handleUpload"></v-file-input>
   </div>
 </template>
@@ -30,6 +30,7 @@ const openFileInput = () => {
 }
 
 const handleUpload = async (e) => {
+  if (e.length === 0) return
   const formData = new FormData()
   formData.append('file', e[0])
   formData.append('key', user.value.uuid)
@@ -49,14 +50,6 @@ const handleUpload = async (e) => {
     await useUserStore().fetchUser()
   }
 }
-
-watch(() => user.value, async () => {
-  console.log(user.value)
-  if (!user.value.profilePicture) return
-  await useUserStore().fetchUser()
-  imgUrl.value = user.value.profilePicture.url
-}, {immediate: true})
-
 </script>
 
 <style lang="scss" scoped>
