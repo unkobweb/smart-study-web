@@ -11,7 +11,7 @@
           Your browser does not support HTML video.
         </video>
         <div class="d-flex flex-row mt-4">
-          <NuxtLink class="cursor" v-for="courseJob in course.courseJobs" :key="courseJob.uuid" :to="`/jobs/${courseJob.job.uuid}`">
+          <NuxtLink class="cursor" v-for="courseJob in course.courseJobs" :key="courseJob.uuid" :to="`/job/${courseJob.job.uuid}`">
             <v-chip color="primary" class="mr-2 cursor" >
               {{ courseJob.job.name }}
             </v-chip>
