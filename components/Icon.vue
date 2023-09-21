@@ -4,15 +4,6 @@
 
 <script setup>
 import { default as eva } from 'eva-icons';
-// import * as evaI from 'eva-icons';
-
-// let eva;
-
-// if (evaI.default) {
-//   eva = evaI.default
-// } else {
-//   eva = evaI
-// }
 
 const props = defineProps({
   icon: {
