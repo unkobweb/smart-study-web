@@ -4,6 +4,7 @@
       <v-text-field
         variant="outlined"
         color="primary"
+        append-inner-icon="search-outline"
         label="Rechercher un cours ou un métier"
         v-model="search"
         @input="() => debounceResarch(search)"
@@ -35,13 +36,6 @@ if (Meili.default) {
 
 const { MEILISEARCH_HOST } = useRuntimeConfig().public
 const {data: MEILISEARCH_API_KEY} = await useApiFetch('/meilisearch-key')
-
-console.log({
-  env: process.env.MEILISEARCH_HOST,
-  config: MEILISEARCH_HOST,
-  host: process.env.MEILISEARCH_HOST || MEILISEARCH_HOST,
-  apiKey: MEILISEARCH_API_KEY.value,
-})
 
 const client = new Meilisearch({
   host: process.env.MEILISEARCH_HOST || MEILISEARCH_HOST,
