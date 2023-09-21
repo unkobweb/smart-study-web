@@ -24,7 +24,15 @@
 </template>
 
 <script setup>
-import { Meilisearch } from "meilisearch";
+import Meili from "meilisearch";
+
+let Meilisearch;
+
+if (Meili.Meilisearch) {
+  Meilisearch = Meili.Meilisearch
+} else {
+  Meilisearch = Meili
+}
 console.log({Meilisearch})
 
 
