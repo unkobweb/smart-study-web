@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import Meilisearch from "meilisearch";
+import { Meilisearch } from "meilisearch";
 
 
 const { MEILISEARCH_HOST } = useRuntimeConfig().public
