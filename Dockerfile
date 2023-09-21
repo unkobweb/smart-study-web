@@ -15,6 +15,6 @@ RUN npm ci
 
 COPY . /app
 
-RUN doppler run -- npm run build
+RUN npm run build
 
 CMD doppler run -- node .output/server/index.mjs

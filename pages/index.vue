@@ -34,13 +34,11 @@ if (Meili.default) {
   Meilisearch = Meili
 }
 
-console.log({meilisearch_host: process.env.MEILISEARCH_HOST})
-
 const { MEILISEARCH_HOST } = useRuntimeConfig().public
 const {data: MEILISEARCH_API_KEY} = await useApiFetch('/meilisearch-key')
 
 const client = new Meilisearch({
-  host: MEILISEARCH_HOST,
+  host: MEILISEARCH_HOST || process.env.MEILISEARCH_HOST,
   apiKey: MEILISEARCH_API_KEY.value,
 });
 
