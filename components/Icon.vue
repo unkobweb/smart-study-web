@@ -3,15 +3,16 @@
 </template>
 
 <script setup>
-import * as evaI from 'eva-icons';
+import { default as eva } from 'eva-icons';
+// import * as evaI from 'eva-icons';
 
-let eva;
+// let eva;
 
-if (evaI.default) {
-  eva = evaI.default
-} else {
-  eva = evaI
-}
+// if (evaI.default) {
+//   eva = evaI.default
+// } else {
+//   eva = evaI
+// }
 
 const props = defineProps({
   icon: {
