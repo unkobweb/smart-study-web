@@ -28,8 +28,8 @@ import Meili from "meilisearch";
 
 let Meilisearch;
 
-if (Meili.Meilisearch) {
-  Meilisearch = Meili.Meilisearch
+if (Meili.default) {
+  Meilisearch = Meili.default
 } else {
   Meilisearch = Meili
 }
