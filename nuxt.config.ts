@@ -1,4 +1,5 @@
 console.log(process.env.API_URL)
+console.log(process.env.MEILISEARCH_HOST)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
