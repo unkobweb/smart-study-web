@@ -5,6 +5,7 @@ RUN wget -q -t3 'https://packages.doppler.com/public/cli/rsa.8004D9FF50437357.ke
     apk add doppler
 
 ENV API_URL=https://staging.api.smart-study.fr
+ENV MEILISEARCH_HOST=http://meilisearch:7700
 
 COPY package.json /app/package.json
 COPY package-lock.json /app/package-lock.json
