@@ -4,6 +4,7 @@
 
 <script setup>
 import * as eva from 'eva-icons';
+console.log({eva});
 
 const props = defineProps({
   icon: {
