@@ -24,15 +24,7 @@
 </template>
 
 <script setup>
-import Meili from "meilisearch";
-
-let Meilisearch;
-
-if (Meili.default) {
-  Meilisearch = Meili.default
-} else {
-  Meilisearch = Meili
-}
+import Meilisearch from "meilisearch";
 
 const { MEILISEARCH_HOST } = useRuntimeConfig().public
 const {data: MEILISEARCH_API_KEY} = await useApiFetch('/meilisearch-key')

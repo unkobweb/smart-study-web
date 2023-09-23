@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { default as eva } from 'eva-icons';
+import * as eva from 'eva-icons';
 
 const props = defineProps({
   icon: {
