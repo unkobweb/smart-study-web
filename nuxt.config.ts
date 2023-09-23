@@ -6,7 +6,7 @@ export default defineNuxtConfig({
   ],
 
   build: {
-    transpile: ['vuetify','eva-icons','meilisearch'],
+    transpile: ['vuetify','meilisearch'],
   },
 
   vite: {
