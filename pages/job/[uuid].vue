@@ -42,7 +42,6 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
-import { forEach } from 'cypress/types/lodash';
 
 ChartJS.register(
   CategoryScale,

@@ -10,6 +10,8 @@ export default defineNuxtConfig({
       'vuetify',
       'meilisearch',
       ({ isDev }) => !isDev && 'eva-icons',
+      "chart.js",
+      "vue-chartjs"
     ],
   },
 
