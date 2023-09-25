@@ -95,6 +95,8 @@ export default {
         .replace(/ /g, "_") +
       ".jpg";
 
+    console.log({ jobData, jobSalaryData, donutData, imgUrl, lastMonthFormat, filteredData, averageSalaries, months});
+
     return { jobData, jobSalaryData, donutData, imgUrl, lastMonthFormat, filteredData, averageSalaries, months};
   },
   data() {
