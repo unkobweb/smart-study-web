@@ -1,30 +1,35 @@
 <template>
-  <div class="jo">
-    <v-img height="200" :src="imgUrl" class="text-white" cover></v-img>
-
-    <h1 class="text-center">{{ jobData.name }}</h1>
-    <div class="d-flex justify-space-around">
-      <v-card width="600px">
-        <p>Mois : {{ lastMonthFormat }}</p>
-        <p>
-          Nombre d'offres d'emploi relevées : {{ filteredData.totalOffers }}
-        </p>
-        <p>
-          Salaire moyen relevé : {{ parseInt(filteredData.averageSalary) }} M €
-          Annuel
-        </p>
-      </v-card>
-      <v-card width="600px">
-        <p>{{ jobData.description }}</p>
-      </v-card>
+  <div>
+    <div class="jo" v-if="jobData">
+      <v-img height="200" :src="imgUrl" class="text-white" cover></v-img>
+  
+      <h1 class="text-center">{{ jobData.name }}</h1>
+      <div class="d-flex justify-space-around">
+        <v-card width="600px">
+          <p>Mois : {{ lastMonthFormat }}</p>
+          <p>
+            Nombre d'offres d'emploi relevées : {{ filteredData.totalOffers }}
+          </p>
+          <p>
+            Salaire moyen relevé : {{ parseInt(filteredData.averageSalary) }} M €
+            Annuel
+          </p>
+        </v-card>
+        <v-card width="600px">
+          <p>{{ jobData.description }}</p>
+        </v-card>
+      </div>
+  
+      <div class="nb-offers"></div>
+      <div class="graph" style="position: relative; height: 40vh; width: 80vw">
+        <!-- Le barchart représente l'évolution du salaire proposé pour le poste sur les douzes derniers mois -->
+        <Bar :data="data" :options="options" />
+        <!-- Le donut doit représenter le pourcentage d'offres liées au métier qu'on regarde sur la totalité des offres -->
+        <Doughnut :data="chartData" :options="chartOptions" />
+      </div>
     </div>
-
-    <div class="nb-offers"></div>
-    <div class="graph" style="position: relative; height: 40vh; width: 80vw">
-      <!-- Le barchart représente l'évolution du salaire proposé pour le poste sur les douzes derniers mois -->
-      <Bar :data="data" :options="options" />
-      <!-- Le donut doit représenter le pourcentage d'offres liées au métier qu'on regarde sur la totalité des offres -->
-      <Doughnut :data="chartData" :options="chartOptions" />
+    <div v-else>
+      <p>Chargement...</p>
     </div>
   </div>
 </template>
@@ -61,11 +66,14 @@ export default {
   },
 
   async setup() {
+    console.log("setup");
     const jobUuid = useRoute().params.uuid;
     const { data: jobData } = await useApiFetch(`/jobs/${jobUuid}`);
     const { data: jobSalariesData } = await useApiFetch(
       `/job-salaries/${jobUuid}`
     );
+
+    console.log({ jobData: jobData.value, jobSalariesData: jobSalariesData.value });
     
     // @ts-ignore
     const [jobSalaryData, otherJobs] = jobSalariesData.value
