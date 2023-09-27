@@ -35,6 +35,8 @@ export default defineNuxtConfig({
     ]
   },
 
+  ssr: true,
+
   modules: [
     '@pinia/nuxt',
     '@pinia-plugin-persistedstate/nuxt'

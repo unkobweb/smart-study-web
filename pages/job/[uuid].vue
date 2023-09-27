@@ -1,35 +1,29 @@
 <template>
-  <div>
-    <div class="jo" v-if="jobData">
-      <v-img height="200" :src="imgUrl" class="text-white" cover></v-img>
-  
-      <h1 class="text-center">{{ jobData.name }}</h1>
-      <div class="d-flex justify-space-around">
-        <v-card width="600px">
-          <p>Mois : {{ lastMonthFormat }}</p>
-          <p>
-            Nombre d'offres d'emploi relevées : {{ filteredData.totalOffers }}
-          </p>
-          <p>
+  <div class="w-100 h-75">
+    <div class="d-flex flex-row pa-6 w-100 align-center">
+      <v-card class="w-33 elevation-4 mr-8 h-75">
+        <v-img height="150" :src="imgUrl" class="text-white" cover></v-img>
+        <div class="pa-4">
+          <h1 class="mb-4">{{ jobData.name }}</h1>
+          <p class="mb-4">{{ jobData.description }}</p>
+          <!-- <p>Mois : {{ lastMonthFormat }}</p> -->
+          <h2 class="mb-4">Informations clés :</h2>
+          <h3>Nombre d'offres d'emploi relevées : {{ filteredData.totalOffers }}</h3>
+          <h3>
             Salaire moyen relevé : {{ parseInt(filteredData.averageSalary) }} M €
             Annuel
-          </p>
-        </v-card>
-        <v-card width="600px">
-          <p>{{ jobData.description }}</p>
-        </v-card>
-      </div>
-  
-      <div class="nb-offers"></div>
-      <div class="graph" style="position: relative; height: 40vh; width: 80vw">
+          </h3>
+        </div>
+      </v-card>
+      <!-- <div class="nb-offers"></div> -->
+      <div class="graph d-flex flex-column w-50 mt-n16" style="position: relative; height: 40vh; width: 80vw">
         <!-- Le barchart représente l'évolution du salaire proposé pour le poste sur les douzes derniers mois -->
+        <h2>Salaires moyens</h2>
         <Bar :data="data" :options="options" />
         <!-- Le donut doit représenter le pourcentage d'offres liées au métier qu'on regarde sur la totalité des offres -->
+        <h2>Répartition des offres</h2>
         <Doughnut :data="chartData" :options="chartOptions" />
       </div>
-    </div>
-    <div v-else>
-      <p>Chargement...</p>
     </div>
   </div>
 </template>
@@ -66,14 +60,11 @@ export default {
   },
 
   async setup() {
-    console.log("setup");
     const jobUuid = useRoute().params.uuid;
     const { data: jobData } = await useApiFetch(`/jobs/${jobUuid}`);
     const { data: jobSalariesData } = await useApiFetch(
       `/job-salaries/${jobUuid}`
     );
-
-    console.log({ jobData: jobData.value, jobSalariesData: jobSalariesData.value });
     
     // @ts-ignore
     const [jobSalaryData, otherJobs] = jobSalariesData.value
@@ -88,8 +79,12 @@ export default {
     );
     
     const averageSalaries = jobSalaryData.map((item: any) => parseInt(item.averageSalary));
-    const months = jobSalaryData.map((item: any) => parseInt(item.month));
-    
+    const months = jobSalaryData.map((item: any) => {
+      const date = new Date(item.month.split('T')[0])
+      const labeldate = date.toLocaleString('default', { month: 'long', year: 'numeric' })
+      // return capitalized 
+      return labeldate.charAt(0).toUpperCase() + labeldate.slice(1)
+    });
     
     const donutData = [otherJobs.totalOffers, filteredData.totalOffers]
 
@@ -102,8 +97,6 @@ export default {
         .toLowerCase()
         .replace(/ /g, "_") +
       ".jpg";
-
-    console.log({ jobData, jobSalaryData, donutData, imgUrl, lastMonthFormat, filteredData, averageSalaries, months});
 
     return { jobData, jobSalaryData, donutData, imgUrl, lastMonthFormat, filteredData, averageSalaries, months};
   },
@@ -135,6 +128,7 @@ export default {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
       },
     };
   },
