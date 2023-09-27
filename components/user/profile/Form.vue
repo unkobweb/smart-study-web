@@ -125,6 +125,9 @@ async function saveUser() {
   if (dayOfBirth.value && monthOfBirth.value && yearOfBirth.value) {
     birthDate = new Date(yearOfBirth.value, monthOfBirth.value - 1, dayOfBirth.value, 12);
   }
+  if (!dayOfBirth.value && !monthOfBirth.value && !yearOfBirth.value) {
+    birthDate = null;
+  }
 
   try {
     await useApiFetch(`/user/${user.value?.uuid}`, {
