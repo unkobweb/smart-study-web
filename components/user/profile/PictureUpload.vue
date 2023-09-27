@@ -40,14 +40,20 @@ const handleUpload = async (e) => {
   })
   if (error.value) {
     console.log(error)
+    useSnackbar('Une erreur est survenue', {type: 'error'})
   } else {
-    await useApiFetch('/user/'+user.value.uuid, {
-      method: 'PATCH',
-      body: {
-        profilePicture: data.value.uuid
-      }
-    })
-    await useUserStore().fetchUser()
+    try {
+      await useApiFetch('/user/'+user.value.uuid, {
+        method: 'PATCH',
+        body: {
+          profilePicture: data.value.uuid
+        }
+      })
+      await useUserStore().fetchUser()
+      useSnackbar('Votre photo de profil a été mise à jour', {type: 'success'})
+    } catch (error) {
+      useSnackbar('Une erreur est survenue', {type: 'error'})
+    }
   }
 }
 </script>

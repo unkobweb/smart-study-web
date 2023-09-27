@@ -47,6 +47,7 @@
         class="mb-4 mr-1"
         density="compact"
         color="primary"
+        v-model="dayOfBirth"
       ></v-text-field>
       <v-text-field
         variant="outlined"
@@ -56,6 +57,7 @@
         class="mb-4 mr-1"
         density="compact"
         color="primary"
+        v-model="monthOfBirth"
       ></v-text-field>
       <v-text-field
         variant="outlined"
@@ -65,6 +67,7 @@
         label="Année"
         density="compact"
         color="primary"
+        v-model="yearOfBirth"
       ></v-text-field>
     </v-row>
     <h3 class="mb-2 mt-2">Localisation</h3>
@@ -84,7 +87,7 @@
       :append-inner-icon="null"
     >
     </v-autocomplete>
-    <v-btn class="btnPrimary ml-1">
+    <v-btn class="btnPrimary ml-1" @click="saveUser">
       Appliquer
     </v-btn>
   </div>
@@ -94,7 +97,16 @@
 import { storeToRefs } from "pinia";
 import codesPostaux from 'codes-postaux'; 
 
-const city = ref(null);
+const { user } = storeToRefs(useUserStore());
+const { fetchUser } = useUserStore();
+
+let birthDate = user.value?.dateOfBirth ? new Date(user.value?.dateOfBirth) : undefined;
+
+const dayOfBirth = ref(birthDate?.getDate());
+const monthOfBirth = ref(birthDate?.getMonth() + 1);
+const yearOfBirth = ref(birthDate?.getFullYear());
+
+const city = ref(user.value?.city);
 const cities = ref([]);
 const citySearch = ref(null);
 
@@ -103,9 +115,32 @@ watch(() => citySearch.value, () => {
   cities.value = findCities.map(city => city.codePostal + ', ' + city.libelleAcheminement)
 })
 
-const { user } = storeToRefs(useUserStore());
-
 const email = ref(user.value?.email);
 const firstName = ref(user.value?.firstName);
 const lastName = ref(user.value?.lastName);
+
+async function saveUser() {
+  // if all dates fields provided, build the date and pass it, instead not
+  let birthDate = undefined;
+  if (dayOfBirth.value && monthOfBirth.value && yearOfBirth.value) {
+    birthDate = new Date(yearOfBirth.value, monthOfBirth.value - 1, dayOfBirth.value, 12);
+  }
+
+  try {
+    await useApiFetch(`/user/${user.value?.uuid}`, {
+      method: "PATCH", 
+      body: {
+        firstName: firstName.value,
+        lastName: lastName.value,
+        dateOfBirth: birthDate,
+        city: city.value,
+      }
+    })
+    useSnackbar('Vos informations ont été mises à jour', {type: 'success'})
+  } catch (error) {
+    useSnackbar('Une erreur est survenue', {type: 'error'})
+  } finally {
+    await fetchUser()
+  }
+}
 </script>
