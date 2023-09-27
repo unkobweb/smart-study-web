@@ -103,7 +103,7 @@ const { fetchUser } = useUserStore();
 let birthDate = user.value?.dateOfBirth ? new Date(user.value?.dateOfBirth) : undefined;
 
 const dayOfBirth = ref(birthDate?.getDate());
-const monthOfBirth = ref(birthDate?.getMonth() + 1 ?? null);
+const monthOfBirth = ref((birthDate?.getMonth() + 1) ?? null);
 const yearOfBirth = ref(birthDate?.getFullYear());
 
 const city = ref(user.value?.city);
