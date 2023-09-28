@@ -7,6 +7,8 @@ export default async function (url: string, options: any = {}) {
 
   const accessToken = useCookie('access_token')
 
+  console.log({accessToken})
+
   if (accessToken.value) {
     options = {
       ...options,
@@ -17,6 +19,8 @@ export default async function (url: string, options: any = {}) {
       }
     }
   }
+
+  console.log({options})
 
   const router = useRouter()
 

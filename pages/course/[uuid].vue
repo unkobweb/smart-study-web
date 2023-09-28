@@ -10,12 +10,15 @@
 <script setup>
 const route = useRoute();
 
-const { data: course } = await useApiFetch(`/courses/${route.params.uuid}`);
+const { data: course, error: courseError } = await useApiFetch(`/courses/${route.params.uuid}`);
 
-const {data: purchases} = await useApiFetch(`/purchase/${route.params.uuid}`)
+const {data: purchases, error: purchaseError} = await useApiFetch(`/purchase/${route.params.uuid}`)
 
-console.log(purchases.value)
-console.log(course.value)
+console.log("purchase :",purchases.value)
+console.log("course :",course.value)
+console.log("courseError :",courseError.value)
+console.log("purchaseError :",purchaseError.value)
+
 </script>
 
 <style lang="scss">
