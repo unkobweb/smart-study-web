@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!-- {{ purchases }}
-    {{ course }} -->
     <CoursePreview v-if="purchases.length === 0" :course="course" />
     <CourseLearning v-else :course="course" />
   </div>
@@ -10,15 +8,9 @@
 <script setup>
 const route = useRoute();
 
-const { data: course, error: courseError } = await useApiFetch(`/courses/${route.params.uuid}`);
+const { data: course } = await useApiFetch(`/courses/${route.params.uuid}`);
 
-const {data: purchases, error: purchaseError} = await useApiFetch(`/purchase/${route.params.uuid}`)
-
-console.log("purchase :",purchases.value)
-console.log("course :",course.value)
-console.log("courseError :",courseError.value)
-console.log("purchaseError :",purchaseError.value)
-
+const {data: purchases } = await useApiFetch(`/purchase/${route.params.uuid}`)
 </script>
 
 <style lang="scss">

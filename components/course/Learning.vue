@@ -59,7 +59,7 @@
         <div class="w-25 docs-container">
           <h2 class="mb-4">Documents</h2>
           <div class="d-flex flex-row flex-wrap" v-if="chapter.documents.length">
-            <div class="document-container elevation-2" v-for="doc in chapter.documents" :key="doc.uuid">
+            <div class="document-container" v-for="doc in chapter.documents" :key="doc.uuid">
               <v-icon fill="#636e72" icon="file-text-outline"></v-icon>
               <p>{{ doc.name }}</p>
               <div class="d-flex flex-row align-center">
@@ -172,9 +172,27 @@ onMounted(() => {
   height: fit-content;
   gap: 5px;
   .document-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    text-align: center;
+    overflow-wrap: break-word;
+    padding: 10px;
+    aspect-ratio: 1/1;
     background-color: #fff;
-    margin-right: 10px;
-    margin-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    &:hover {
+      .delete-doc {
+        opacity: 1;
+      }
+    }
+    p {
+      overflow-wrap: break-word;
+      width: 100%;
+    }
   }
 }
 .course-content {
