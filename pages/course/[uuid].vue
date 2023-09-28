@@ -1,9 +1,9 @@
 <template>
   <div>
-    {{ purchases }}
-    {{ course }}
-    <!-- <CoursePreview v-if="purchases.length === 0" :course="course" /> -->
-    <!-- <CourseLearning v-else :course="course" /> -->
+    <!-- {{ purchases }}
+    {{ course }} -->
+    <CoursePreview v-if="purchases.length === 0" :course="course" />
+    <CourseLearning v-else :course="course" />
   </div>
 </template>
 

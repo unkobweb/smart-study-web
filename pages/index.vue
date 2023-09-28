@@ -29,6 +29,8 @@ import Meilisearch from "meilisearch";
 const { MEILISEARCH_HOST } = useRuntimeConfig().public
 const {data: MEILISEARCH_API_KEY} = await useApiFetch('/meilisearch-key')
 
+console.log(MEILISEARCH_API_KEY.value)
+
 const client = new Meilisearch({
   host: process.env.MEILISEARCH_HOST || MEILISEARCH_HOST,
   apiKey: MEILISEARCH_API_KEY.value,
