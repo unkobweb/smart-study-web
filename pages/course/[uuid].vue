@@ -1,7 +1,9 @@
 <template>
   <div>
-    <CoursePreview v-if="purchases.length === 0" :course="course" />
-    <CourseLearning v-else :course="course" />
+    {{ purchases }}
+    {{ course }}
+    <!-- <CoursePreview v-if="purchases.length === 0" :course="course" /> -->
+    <!-- <CourseLearning v-else :course="course" /> -->
   </div>
 </template>
 
@@ -11,6 +13,9 @@ const route = useRoute();
 const { data: course } = await useApiFetch(`/courses/${route.params.uuid}`);
 
 const {data: purchases} = await useApiFetch(`/purchase/${route.params.uuid}`)
+
+console.log(purchases)
+console.log(course)
 </script>
 
 <style lang="scss">

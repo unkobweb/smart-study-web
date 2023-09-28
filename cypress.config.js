@@ -1,9 +1,19 @@
-const { defineConfig } = require("cypress");
+import viteConfig from './vite.config.cypress.component.js'
 
-module.exports = defineConfig({
+import { defineConfig } from "cypress";
+
+export default defineConfig({
   e2e: {
     setupNodeEvents(on, config) {
       // implement node event listeners here
+    },
+  },
+
+  component: {
+    devServer: {
+      framework: "vue",
+      bundler: "vite",
+      viteConfig
     },
   },
 });
