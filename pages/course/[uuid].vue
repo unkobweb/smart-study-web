@@ -14,8 +14,8 @@ const { data: course } = await useApiFetch(`/courses/${route.params.uuid}`);
 
 const {data: purchases} = await useApiFetch(`/purchase/${route.params.uuid}`)
 
-console.log(purchases)
-console.log(course)
+console.log(purchases.value)
+console.log(course.value)
 </script>
 
 <style lang="scss">
